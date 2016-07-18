@@ -18,13 +18,15 @@ int main(int argc, char **argv)  {
     fprintf(stderr, " Error: FATAL: Insufficient arguments\n");
     exit(1);
   }
-  else  {
-    // int i;
-    // for(i = 0; i < argc; i++) {
-    //   printf(" argv[%d]: %s\n", i, argv[i]);
-    // }
-    N = str_to_int(argv[1]);
-  }
+
+  // printing out the command-line arguments.
+  // Picks argv[1] as N, and ignores the rest of the arguments if any
+  // int i;
+  // for(i = 0; i < argc; i++) {
+  //   printf(" argv[%d]: %s\n", i, argv[i]);
+  // }
+
+  N = str_to_int(argv[1]);
   printf(" N = %d\n", N);
 
   return 0;
