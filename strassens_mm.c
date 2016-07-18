@@ -13,21 +13,19 @@
 #define SEED_MATRIX_A 20
 #define SEED_MATRIX_B 21
 
-
 int str_to_int(const char *numstring);
-int** allocate_matrix(const int N);
-int** generate_matrix(const int N, const int SEED);
-int** naive_multiply(int **matA, int **matB, const int N);
-// void generate_matrix(int **matrix, const int N);
-void print_matrix(int **matrix, const int N);
+long** allocate_matrix(const int N);
+long** generate_matrix(const int N, const int SEED);
+long** naive_multiply(long **matA, long **matB, const int N);
+void print_matrix(long **matrix, const int N);
 
 int main(int argc, char **argv)  {
   int N;
 
-  int **matrix_A = NULL;
-  int **matrix_B = NULL;
+  long **matrix_A = NULL;
+  long **matrix_B = NULL;
 
-  int **result_naive = NULL;
+  long **result_naive = NULL;
 
   printf(" argc: %d\n", argc);
 
@@ -52,11 +50,9 @@ int main(int argc, char **argv)  {
   printf(" Matrix A: \n");
   print_matrix(matrix_A, N);
 
-  printf("\n");
-
   // generate_matrix(matrix_A, N);
   matrix_B = generate_matrix(N, SEED_MATRIX_B);
-  printf(" Matrix B: \n");
+  printf("\n Matrix B: \n");
   print_matrix(matrix_B, N);
 
   result_naive = naive_multiply(matrix_A, matrix_B, N);
@@ -66,10 +62,10 @@ int main(int argc, char **argv)  {
   return 0;
 }
 
-int** naive_multiply(int **matA, int **matB, const int N) {
+long** naive_multiply(long **matA, long **matB, const int N) {
   int i, j, k;
 
-  int **result = allocate_matrix(N);
+  long **result = allocate_matrix(N);
   assert(result != NULL);
 
   for(i = 0; i < N; i++)  {
@@ -84,12 +80,12 @@ int** naive_multiply(int **matA, int **matB, const int N) {
   return result;
 }
 
-int** generate_matrix(const int N, const int SEED) {
+long** generate_matrix(const int N, const int SEED) {
   int i, j;
 
   // allocate memory for the matrix
 
-  int **matrix = allocate_matrix(N);
+  long **matrix = allocate_matrix(N);
   assert(matrix != NULL);
 
   // assign random values to the matrix
@@ -104,20 +100,20 @@ int** generate_matrix(const int N, const int SEED) {
   return matrix;
 }
 
-int** allocate_matrix(const int N)  {
+long** allocate_matrix(const int N)  {
   int i;
 
-  int **matrix = malloc(N * sizeof(int *));
+  long **matrix = malloc(N * sizeof(long *));
   assert(matrix != NULL);
   for(i = 0; i < N; i++)  {
-    matrix[i] = malloc(N * sizeof(int));
+    matrix[i] = malloc(N * sizeof(long));
     assert(matrix[i] != NULL);
   }
 
   return matrix;
 }
 
-void print_matrix(int **matrix, const int N)  {
+void print_matrix(long **matrix, const int N)  {
   int i, j;
 
   if(matrix != NULL)  {
@@ -134,20 +130,21 @@ void print_matrix(int **matrix, const int N)  {
 }
 
 int str_to_int(const char *numstring) {
-  int number = 0;
+  int result_number = 0;
+  int digit;
+
   int i;
-  int digit = 0;
 
   for(i = 0; numstring[i] != '\0'; i++) {
     if( isdigit(numstring[i]) ) {
       digit = numstring[i] - '0';
-      number = (number * 10) + digit;
-      // printf(" DEBUG: Number: %d, %d %d\n", i, number, digit);
+      result_number = (result_number * 10) + digit;
+      // printf(" DEBUG: Number: %d, %d %d\n", i, result_number, digit);
     }
     else  {
       printf(" Error: str_to_int(%s): not a digit\n", numstring);
       return 0;
     }
   }
-  return number;
+  return result_number;
 }
