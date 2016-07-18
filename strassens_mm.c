@@ -8,9 +8,23 @@
 
 int str_to_int(const char *numstring);
 
-int main()  {
-  printf(" Hello, world!\n");
-  
+int main(int argc, char **argv)  {
+  int N;
+
+  printf(" argc: %d\n", argc);
+
+  if(argc < 2) {
+    fprintf(stderr, " Error: FATAL: Insufficient arguments\n");
+  }
+  else  {
+    // int i;
+    // for(i = 0; i < argc; i++) {
+    //   printf(" argv[%d]: %s\n", i, argv[i]);
+    // }
+    N = str_to_int(argv[1]);
+  }
+  printf(" N = %d\n", N);
+
   return 0;
 }
 
