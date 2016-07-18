@@ -27,6 +27,8 @@ int main(int argc, char **argv)  {
   int **matrix_A = NULL;
   int **matrix_B = NULL;
 
+  int **result_naive = NULL;
+
   printf(" argc: %d\n", argc);
 
   if(argc < 2) {
@@ -57,14 +59,27 @@ int main(int argc, char **argv)  {
   printf(" Matrix B: \n");
   print_matrix(matrix_B, N);
 
+  result_naive = naive_multiply(matrix_A, matrix_B, N);
+  printf("\n Naive Multiply Result: \n");
+  print_matrix(result_naive, N);
+
   return 0;
 }
 
 int** naive_multiply(int **matA, int **matB, const int N) {
-  int i, j;
+  int i, j, k;
 
   int **result = allocate_matrix(N);
   assert(result != NULL);
+
+  for(i = 0; i < N; i++)  {
+    for(j = 0; j < N; j++)  {
+      result[i][j] = 0;
+      for(k = 0; k < N; k++)  {
+        result[i][j] += matA[i][k] * matB[k][j];
+      }
+    }
+  }
 
   return result;
 }
@@ -114,7 +129,7 @@ void print_matrix(int **matrix, const int N)  {
   if(matrix != NULL)  {
     for(i = 0; i < N; i++)  {
       for(j = 0; j < N; j++)  {
-        printf(" %d", matrix[i][j]);
+        printf("\t%d", matrix[i][j]);
       }
       printf("\n");
     }
