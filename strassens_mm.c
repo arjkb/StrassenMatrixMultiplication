@@ -9,8 +9,14 @@
 
 int str_to_int(const char *numstring);
 
+void generate_matrix(int **matrix, const int N);
+void print_matrix(int **matrix, const int N);
+
 int main(int argc, char **argv)  {
   int N;
+
+  int **matrix_A = NULL;
+  int **matrix_B = NULL;
 
   printf(" argc: %d\n", argc);
 
@@ -27,11 +33,42 @@ int main(int argc, char **argv)  {
   // }
 
   N = str_to_int(argv[1]);
+
   printf(" N = %d\n", N);
+
+  generate_matrix(matrix_A, N);
+  print_matrix(matrix_A, N);
 
   return 0;
 }
 
+
+void generate_matrix(int **matrix, const int N) {
+  int i, j;
+
+  // allocate memory for the matrix
+  matrix = malloc(N * sizeof(int *));
+  for(i = 0; i < N; i++)  {
+    matrix[i] = malloc(N * sizeof(int));
+  }
+
+  // assign values to the matrix
+  for(i = 0; i < N; i++)  {
+    for(j = 0; j < N; j++)  {
+      matrix[i][j] = 3;
+    }
+  }
+}
+
+void print_matrix(int **matrix, const int N)  {
+  int i, j;
+  for(i = 0; i < N; i++)  {
+    for(j = 0; i < N; j++)  {
+      printf(" %d", matrix[i][j]);
+    }
+    printf("\n");
+  }
+}
 
 int str_to_int(const char *numstring) {
   int number = 0;
