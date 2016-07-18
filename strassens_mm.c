@@ -91,12 +91,6 @@ int** generate_matrix(const int N, const int SEED) {
 
   int **matrix = allocate_matrix(N);
   assert(matrix != NULL);
-  // int **matrix = malloc(N * sizeof(int *));
-  // assert(matrix != NULL);
-  // for(i = 0; i < N; i++)  {
-  //   matrix[i] = malloc(N * sizeof(int));
-  //   assert(matrix[i] != NULL);
-  // }
 
   // assign random values to the matrix
   // Fixed seed value ensures that the outputs can be reproduced.
