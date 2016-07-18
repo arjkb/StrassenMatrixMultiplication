@@ -4,11 +4,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
+
 #include <ctype.h>
 #include <math.h>
 
+#define RANDOM_LIMIT 100
+#define SEED_MATRIX_A 20
+#define SEED_MATRIX_B 21
+
+
 int str_to_int(const char *numstring);
-int** generate_matrix(const int N);
+int** generate_matrix(const int N, const int SEED);
 // void generate_matrix(int **matrix, const int N);
 void print_matrix(int **matrix, const int N);
 
@@ -37,46 +44,56 @@ int main(int argc, char **argv)  {
   printf(" N = %d\n", N);
 
   // generate_matrix(matrix_A, N);
-  matrix_A = generate_matrix(N);
+  matrix_A = generate_matrix(N, SEED_MATRIX_A);
+  printf(" Matrix A: \n");
   print_matrix(matrix_A, N);
+
+  printf("\n");
+
+  // generate_matrix(matrix_A, N);
+  matrix_B = generate_matrix(N, SEED_MATRIX_B);
+  printf(" Matrix B: \n");
+  print_matrix(matrix_B, N);
 
   return 0;
 }
 
-
-int** generate_matrix(const int N) {
+int** generate_matrix(const int N, const int SEED) {
   int i, j;
 
   // allocate memory for the matrix
-  int **matrix;
-  int *temp;
-
-  // matrix = (int **)malloc(N * sizeof(int *));
-  // temp = malloc(N * N * sizeof(int));
-  matrix = malloc(N * sizeof(int *));
-
+  int **matrix = malloc(N * sizeof(int *));
+  assert(matrix != NULL);
   for(i = 0; i < N; i++)  {
     matrix[i] = malloc(N * sizeof(int));
-    // matrix[i] = temp + (i * N);
+    assert(matrix[i] != NULL);
   }
 
-  // assign values to the matrix
+  // assign random values to the matrix
+  // Fixed seed value ensures that the outputs can be reproduced.
+  // Useful for debugging purposes.
+  srandom(SEED);
   for(i = 0; i < N; i++)  {
     for(j = 0; j < N; j++)  {
-      matrix[i][j] = 3;
+      matrix[i][j] = (random() % RANDOM_LIMIT);
     }
   }
-
   return matrix;
 }
 
 void print_matrix(int **matrix, const int N)  {
   int i, j;
-  for(i = 0; i < N; i++)  {
-    for(j = 0; j < N; j++)  {
-      printf(" %d", matrix[i][j]);
+
+  if(matrix != NULL)  {
+    for(i = 0; i < N; i++)  {
+      for(j = 0; j < N; j++)  {
+        printf(" %d", matrix[i][j]);
+      }
+      printf("\n");
     }
-    printf("\n");
+  }
+  else  {
+    fprintf(stderr, " Error: print_matrix(): matrix parameter is NULL\n");
   }
 }
 
