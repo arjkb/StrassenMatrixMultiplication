@@ -15,7 +15,9 @@
 
 
 int str_to_int(const char *numstring);
+int** allocate_matrix(const int N);
 int** generate_matrix(const int N, const int SEED);
+int** naive_multiply(int **matA, int **matB, const int N);
 // void generate_matrix(int **matrix, const int N);
 void print_matrix(int **matrix, const int N);
 
@@ -58,16 +60,28 @@ int main(int argc, char **argv)  {
   return 0;
 }
 
+int** naive_multiply(int **matA, int **matB, const int N) {
+  int i, j;
+
+  int **result = allocate_matrix(N);
+  assert(result != NULL);
+
+  return result;
+}
+
 int** generate_matrix(const int N, const int SEED) {
   int i, j;
 
   // allocate memory for the matrix
-  int **matrix = malloc(N * sizeof(int *));
+
+  int **matrix = allocate_matrix(N);
   assert(matrix != NULL);
-  for(i = 0; i < N; i++)  {
-    matrix[i] = malloc(N * sizeof(int));
-    assert(matrix[i] != NULL);
-  }
+  // int **matrix = malloc(N * sizeof(int *));
+  // assert(matrix != NULL);
+  // for(i = 0; i < N; i++)  {
+  //   matrix[i] = malloc(N * sizeof(int));
+  //   assert(matrix[i] != NULL);
+  // }
 
   // assign random values to the matrix
   // Fixed seed value ensures that the outputs can be reproduced.
@@ -78,6 +92,19 @@ int** generate_matrix(const int N, const int SEED) {
       matrix[i][j] = (random() % RANDOM_LIMIT);
     }
   }
+  return matrix;
+}
+
+int** allocate_matrix(const int N)  {
+  int i;
+
+  int **matrix = malloc(N * sizeof(int *));
+  assert(matrix != NULL);
+  for(i = 0; i < N; i++)  {
+    matrix[i] = malloc(N * sizeof(int));
+    assert(matrix[i] != NULL);
+  }
+
   return matrix;
 }
 
