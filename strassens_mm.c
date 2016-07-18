@@ -3,6 +3,7 @@
 */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
 
@@ -15,6 +16,7 @@ int main(int argc, char **argv)  {
 
   if(argc < 2) {
     fprintf(stderr, " Error: FATAL: Insufficient arguments\n");
+    exit(1);
   }
   else  {
     // int i;
