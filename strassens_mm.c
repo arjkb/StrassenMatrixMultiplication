@@ -94,8 +94,30 @@ void redundant_display(long **matrix, const int N)  {
     // display4(matrix, N);
   }
   else  {
-    display4(matrix, N);
-    redundant_display(matrix, N/2);
+    // display4(matrix, N);
+    // redundant_display(matrix, N/2);
+
+    long **A = extract_quadrant(matrix, N, Q_TOP_LEFT);
+    long **B = extract_quadrant(matrix, N, Q_TOP_RIGHT);
+    long **C = extract_quadrant(matrix, N, Q_BOTTOM_LEFT);
+    long **D = extract_quadrant(matrix, N, Q_BOTTOM_RIGHT);
+
+    printf("\n >>-------------<< \n");
+    print_matrix(A, N/2);
+
+    printf("\n\n");
+    print_matrix(B, N/2);
+
+    printf("\n\n");
+    print_matrix(C, N/2);
+
+    printf("\n\n");
+    print_matrix(D, N/2);
+
+    redundant_display(A, N/2);
+    redundant_display(B, N/2);
+    redundant_display(C, N/2);
+    redundant_display(D, N/2);
   }
 }
 
