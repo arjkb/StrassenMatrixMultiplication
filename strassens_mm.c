@@ -13,11 +13,23 @@
 #define SEED_MATRIX_A 20
 #define SEED_MATRIX_B 21
 
+#define Q_TOP_LEFT 1
+#define Q_TOP_RIGHT 2
+#define Q_BOTTOM_LEFT 3
+#define Q_BOTTOM_RIGHT 4
+
+
 int str_to_int(const char *numstring);
 long** allocate_matrix(const int N);
 long** generate_matrix(const int N, const int SEED);
 long** naive_multiply(long **matA, long **matB, const int N);
 void print_matrix(long **matrix, const int N);
+
+long** naive_multiply(long **matA, long **matB, const int N);
+
+void display4(long **matrix, const int N);
+long **extract_quadrant(long **matrix, const int N, const int QUADRANT);
+
 
 int main(int argc, char **argv)  {
   int N;
@@ -59,7 +71,89 @@ int main(int argc, char **argv)  {
   printf("\n Naive Multiply Result: \n");
   print_matrix(result_naive, N);
 
+  display4(result_naive, N);
+
   return 0;
+}
+
+// long** naive_multiply(long **matA, long **matB, const int N)  {
+//   if(N == 1)  {
+//     // Base case
+//     return
+//   }
+// }
+
+void display4(long **matrix, const int N) {
+  // long **matrix_q1 = allocate_matrix(N/2);
+  // long **matrix_q2 = allocate_matrix(N/2);
+  // long **matrix_q3 = allocate_matrix(N/2);
+  // long **matrix_q4 = allocate_matrix(N/2);
+
+  long **A = extract_quadrant(matrix, N, Q_TOP_LEFT);
+  long **B = extract_quadrant(matrix, N, Q_TOP_RIGHT);
+  long **C = extract_quadrant(matrix, N, Q_BOTTOM_LEFT);
+  long **D = extract_quadrant(matrix, N, Q_BOTTOM_RIGHT);
+
+  printf("\n Quadrant A: \n");
+  print_matrix(A, N/2);
+
+  printf("\n Quadrant B: \n");
+  print_matrix(B, N/2);
+
+  printf("\n Quadrant C: \n");
+  print_matrix(C, N/2);
+
+  printf("\n Quadrant D: \n");
+  print_matrix(D, N/2);
+
+}
+
+long **extract_quadrant(long **matrix, const int N, const int QUADRANT)  {
+
+  long **matrix_result = allocate_matrix(N/2);
+
+  int start_row = -1;
+  int start_col = -1;
+
+  int i, j;
+
+  // printf("\n Quadrant %d", QUADRANT);
+
+  switch (QUADRANT) {
+    case Q_TOP_LEFT:
+                  start_row = 0;
+                  start_col = 0;
+                  break;
+
+    case Q_TOP_RIGHT:
+                  start_row = 0;
+                  start_col = N/2;
+                  break;
+
+    case Q_BOTTOM_LEFT:
+                  start_row = N/2;
+                  start_col = 0;
+                  break;
+
+    case Q_BOTTOM_RIGHT:
+                  start_row = N/2;
+                  start_col = N/2;
+                  break;
+    default:
+                  fprintf(stderr, " Error: Invalid QUADRANT index\n");
+                  break;
+  }
+
+  // printf("\n Q%d %d %d\n", QUADRANT, start_row, start_col);
+
+  for(i = start_row; i < (start_row + N/2); i++)  {
+    for(j = start_col; j < (start_col + N/2); j++)  {
+      // printf(" Assigning: %ld\n", matrix[i][j]);
+      matrix_result[i - start_row][j - start_col] = matrix[i][j];
+    }
+  }
+
+  return matrix_result;
 }
 
 long** naive_multiply(long **matA, long **matB, const int N) {
