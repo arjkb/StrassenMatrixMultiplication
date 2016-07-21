@@ -30,6 +30,8 @@ long** naive_multiply(long **matA, long **matB, const int N);
 void display4(long **matrix, const int N);
 long **extract_quadrant(long **matrix, const int N, const int QUADRANT);
 
+void redundant_display(long **matrix, const int N);
+
 
 int main(int argc, char **argv)  {
   int N;
@@ -71,7 +73,9 @@ int main(int argc, char **argv)  {
   printf("\n Naive Multiply Result: \n");
   print_matrix(result_naive, N);
 
-  display4(result_naive, N);
+  // display4(result_naive, N);
+
+  redundant_display(result_naive, N);
 
   return 0;
 }
@@ -82,6 +86,18 @@ int main(int argc, char **argv)  {
 //     return
 //   }
 // }
+
+void redundant_display(long **matrix, const int N)  {
+  printf("\n -------------------- \n");
+  if(N < 2)  {
+    // printf(" %d\n", );
+    // display4(matrix, N);
+  }
+  else  {
+    display4(matrix, N);
+    redundant_display(matrix, N/2);
+  }
+}
 
 void display4(long **matrix, const int N) {
   // long **matrix_q1 = allocate_matrix(N/2);
